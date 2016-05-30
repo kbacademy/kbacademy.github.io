@@ -18,4 +18,6 @@ for everyRegion in availRegions:
     for status in client.describe_instance_status(IncludeAllInstances=True)['InstanceStatuses']:
         print status
 
-#Assignment: If the dictionary 'status' is empty, then print the message "No Instance Running", else print the status of the instance.
+'''
+Assignment: If the dictionary 'status' is empty, then print the message "No Instance Running", else print the status of the instance.
+'''

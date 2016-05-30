@@ -41,5 +41,6 @@ print "All UnUsed Security Groups are: " + str(unUsedGroups)
 '''
 ASSIGNMENT:
 Get the security group details using the client interface of Boto3 to AWS.
+
 Hint: ec2Client = boto3.client('ec2')
 '''

@@ -1,0 +1,71 @@
+<project name="ADF_Dev_Deployment" default="connect-server">
+<!-- <property file="build.properties" /> -->
+<property name="deploy.target" value="${wl.target}" />
+<property name="wls.home" value="${wl.home}" />
+
+<property name="deploy.name" value="${app.name}" />
+<property name="deploy.source" value="${app.source}" />
+
+<taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy">
+	<classpath>
+		<pathelement location="${wls.home}\\server\\lib\\weblogic.jar" />
+	</classpath>
+	
+</taskdef>
+<target name="dev">
+        <property name="wls.env" value="Dev" />
+        <property name="wls.username" value="weblogic" />
+        <property name="wls.password" value="welcome1" />
+        <property name="wls.hostname" value="localhost" />
+        <property name="wls.port" value="7001" />
+        <property name="admin.server.name" value="DefaultServer" />
+</target>
+<target name="connect-server">
+	<echo message="Connecting with ${wls.env} environment" />
+    <wlserver host="${wls.hostname}" 
+				port="${wls.port}" 
+				username="${wls.username}" 
+				password="${wls.password}"
+				verbose="true"
+				action="connect" />
+</target>
+
+<target name="deploy">
+<echo message="##################################" />
+<echo message="Deploying application ${app.name}" />
+<echo message="##################################" />
+<wldeploy action="deploy"
+			upload="true"
+			name="${deploy.name}"
+			source="${deploy.source}"
+			user="${wls.username}"
+			password="${wls.password}"
+			verbose="true"
+			adminurl="t3://${wls.hostname}:${wls.port}" targets="${deploy.target}" />
+</target>
+
+<target name="redeploy">
+<wldeploy action="redeploy"
+			name="${deploy.name}"
+			user="${wls.username}"
+			password="${wls.password}"
+			verbose="true"
+			adminurl="t3://${wls.hostname}:${wls.port}" targets="${deploy.target}" />
+</target>
+
+<target name="undeploy">
+<echo message="##################################" />
+<echo message="UnDeploying application ${app.name}" />
+<echo message="##################################" />
+<wldeploy action="undeploy"
+			name="${deploy.name}"
+			user="${wls.username}"
+			failonerror="true"
+			password="${wls.password}"
+			verbose="true"
+			adminurl="t3://${wls.hostname}:${wls.port}" targets="${deploy.target}" />
+</target>
+<target name="nodeploy">
+	<echo message="No deployment has been made" />
+</target>
+</project>
